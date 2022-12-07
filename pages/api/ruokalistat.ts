@@ -20,7 +20,6 @@ export default async function handler(
 ) {
     const foodLists = await getFoodLists()
     res.status(200).json(foodLists)
-    // res.status(200).json({ name: 'John Doe' })
 }
 
 

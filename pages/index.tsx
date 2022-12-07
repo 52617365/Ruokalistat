@@ -1,5 +1,6 @@
 import React from "react";
-import {RuokalistatResponse, SetMenu} from "../types/ruokalistat";
+import {RuokalistatResponse, SetMenu, Meal} from "../types/ruokalistat";
+import RestaurantCard from "../components/RestaurantCard";
 export default function Home() {
     // send request to backend
     const [data, setData] = React.useState<Array<RuokalistatResponse>>([]);
@@ -12,7 +13,10 @@ export default function Home() {
   return (
       <>
         <h1 className={"text-center text-2xl font-mono mt-28"}>Mitä tänään on ruokana?</h1>
-          {renderFoodsFromRestaurants(data)}
+          {/* center grid */}
+            <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center"}>
+              {renderFoodsFromRestaurants(data)}
+          </div>
       </>
   )
 }
@@ -24,25 +28,9 @@ function renderFoodsFromRestaurants(restaurantFood: Array<RuokalistatResponse>) 
     return restaurantFood.map((restaurant: RuokalistatResponse) => {
         return (
             <>
-                <p>Ravintola: {restaurant.LunchMenu.Restaurant}</p>
-                <p>{restaurant.LunchMenu.DayOfWeek}</p>
-                {renderSetMenus(restaurant.LunchMenu.SetMenus)}
+                <RestaurantCard restaurant={restaurant}/>
             </>
     )
     })
 }
 
-function renderSetMenus(setMenu: Array<SetMenu>) {
-    if (setMenu == null || setMenu.length === 0) {
-        return <></>
-    }
-        return setMenu.map((setMenu: SetMenu) => {
-                return (
-                    <>
-                        <p>{setMenu.Name}</p>
-                        <p>{setMenu.Price}</p>
-                    </>
-
-            )
-        })
-}
