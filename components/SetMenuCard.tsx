@@ -3,7 +3,7 @@ import {Meal, SetMenu } from "../types/ruokalistat";
 
 export default function SetMenuCard({setMenu}: {setMenu: SetMenu}) {
     return (
-        <div className="card mx-auto w-96 bg-slate-600 shadow-xl">
+        <div className="card mx-auto bg-slate-600 shadow-xl">
             <div className="card-body">
                 <h2 className="card-title"><strong>Ruokalaji:</strong> {renderFoodCategory(setMenu)}</h2>
                 <p><strong>Hinta: </strong>{renderPrice(setMenu)}</p>
