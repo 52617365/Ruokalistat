@@ -25,15 +25,18 @@ export default async function handler(
 
 // https://www.foodandco.fi/api/restaurant/menu/day?date=2022-12-7&language=fi&onlyPublishedMenu=true&restaurantPageId=180084
 async function getFoodLists(): Promise<Array<RuokalistatResponse>> {
-    let foodLists : Array<RuokalistatResponse> = [];
     const restaurantUrls = getRestaurantUrls()
-    for (const restaurantUrl of restaurantUrls) {
-        const data = await fetch(restaurantUrl.url)
-        const deserializedData : RuokalistatResponse = await data.json()
-        deserializedData.LunchMenu.Restaurant = restaurantUrl.restaurantName
-        foodLists.push(deserializedData)
-    }
-    return foodLists
+    let restaurants = await Promise.all(restaurantUrls.map((e => {
+            return (
+                fetch(e.url)
+                .then(response => response.json())
+                .then(data => {
+                    data.restaurantName = e.restaurantName
+                    return data
+                })
+            )
+    })))
+    return restaurants
 }
 
 
