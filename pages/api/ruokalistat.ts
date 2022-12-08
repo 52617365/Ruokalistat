@@ -31,7 +31,7 @@ async function getFoodLists(): Promise<Array<RuokalistatResponse>> {
                 fetch(e.url)
                 .then(response => response.json())
                 .then(data => {
-                    data.restaurantName = e.restaurantName
+                    data.LunchMenu.Restaurant = e.restaurantName
                     return data
                 })
             )
